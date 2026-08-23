@@ -1,7 +1,9 @@
 import { Resend } from "resend";
-import { brand } from "@/lib/content";
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Resend's test sender only delivers to the account email until a domain is verified.
+const TEST_INBOX = "noob.er2026@gmail.com";
 
 export function isValidEmail(value: string) {
   return EMAIL_PATTERN.test(value);
@@ -17,7 +19,7 @@ export function escapeHtml(value: string) {
 }
 
 function inboxAddress() {
-  return process.env.CONTACT_INBOX?.trim() || brand.email;
+  return process.env.CONTACT_INBOX?.trim() || TEST_INBOX;
 }
 
 function fromAddress() {
