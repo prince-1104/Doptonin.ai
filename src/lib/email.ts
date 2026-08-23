@@ -21,7 +21,7 @@ function inboxAddress() {
 }
 
 function fromAddress() {
-  return process.env.RESEND_FROM?.trim() || "Doptonin <beth.t@example.com>";
+  return process.env.RESEND_FROM?.trim() || "Doptonin <hello@doptonin.online>";
 }
 
 export async function sendInboxEmail({
