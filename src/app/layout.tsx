@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
 import { brand, hero } from "@/lib/content";
 import "./globals.css";
 
@@ -51,6 +52,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden bg-obsidian font-sans text-foreground antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
