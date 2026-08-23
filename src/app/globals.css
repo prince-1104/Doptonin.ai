@@ -3,25 +3,110 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0b0e1a;
+  --foreground: #f4f6fa;
+  --accent: #2ee6d6;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+::selection {
+  background: rgba(46, 230, 214, 0.22);
+  color: #f4f6fa;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-11 w-full items-center justify-center rounded-btn border px-5 py-2.5 text-sm font-medium tracking-wide transition-[border-color,box-shadow,background-color,color] duration-300 sm:w-auto;
+  }
+
+  .btn-primary {
+    @apply border-accent/60 bg-accent/5 text-accent hover:border-accent hover:bg-accent/10 hover:shadow-glow;
+  }
+
+  .btn-secondary {
+    @apply border-white/15 bg-transparent text-foreground/85 hover:border-white/35 hover:text-foreground;
+  }
+
+  .field {
+    @apply min-h-11 w-full rounded-btn border border-white/10 bg-obsidian px-4 py-3 text-base text-foreground placeholder:text-muted/60 outline-none transition-[border-color,box-shadow] duration-300 focus:border-accent/60 focus:shadow-glow;
+  }
+
+  .section-shell {
+    @apply scroll-mt-20 px-4 py-16 sm:px-6 md:scroll-mt-24 md:py-28;
+  }
+
+  .section-label {
+    @apply mb-4 block text-[11px] font-medium uppercase tracking-label text-accent;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+
+.pulse-path {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: pulse-draw 2.8s ease-out forwards;
+}
+
+@keyframes pulse-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-enter {
+  animation: fade-up 0.75s ease-out both;
+}
+
+.hero-enter-delay {
+  animation: fade-up 0.75s ease-out 0.12s both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  canvas {
+    animation: none;
+  }
+
+  .pulse-path,
+  .hero-enter,
+  .hero-enter-delay {
+    animation: none;
+  }
+
+  .pulse-path {
+    stroke-dashoffset: 0;
   }
 }
