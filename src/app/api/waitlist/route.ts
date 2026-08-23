@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { escapeHtml, isValidEmail, sendInboxEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -16,16 +15,26 @@ export async function POST(request: Request) {
       ? body.email.trim()
       : "";
 
-  if (!email || !EMAIL_PATTERN.test(email)) {
+  if (!email || !isValidEmail(email)) {
     return NextResponse.json(
       { ok: false, error: "A valid email address is required." },
       { status: 400 },
     );
   }
 
-  // TODO: Wire this to Resend, ConvertKit, or a Supabase `waitlist` table.
-  // TODO: Add rate limiting and double-opt-in before taking this to production.
-  // TODO: Persist `email` and `created_at`; do not log addresses in plaintext in production.
+  try {
+    await sendInboxEmail({
+      subject: `Waitlist: ${email}`,
+      replyTo: email,
+      text: `New waitlist signup\n\nEmail: ${email}`,
+      html: `<p>New waitlist signup</p><p>Email: ${escapeHtml(email)}</p>`,
+    });
+  } catch {
+    return NextResponse.json(
+      { ok: false, error: "Could not save that email right now. Try again in a moment." },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { escapeHtml, isValidEmail, sendInboxEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -23,16 +22,31 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!EMAIL_PATTERN.test(email)) {
+  if (!isValidEmail(email)) {
     return NextResponse.json(
       { ok: false, error: "A valid email address is required." },
       { status: 400 },
     );
   }
 
-  // TODO: Forward this request to Resend (or Formspree) addressed to doptonin@gmail.com.
-  // TODO: Store inbound investor inquiries in a private table (Supabase) with timestamps.
-  // TODO: Add spam protection (honeypot or Turnstile) before public launch.
+  try {
+    await sendInboxEmail({
+      subject: `Investor inquiry from ${name}`,
+      replyTo: email,
+      text: `New investor inquiry\n\nName: ${name}\nEmail: ${email}\n\n${message}`,
+      html: `
+        <p>New investor inquiry</p>
+        <p><strong>Name:</strong> ${escapeHtml(name)}<br />
+        <strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p style="white-space:pre-wrap">${escapeHtml(message)}</p>
+      `,
+    });
+  } catch {
+    return NextResponse.json(
+      { ok: false, error: "Could not send that message right now. Try again in a moment." },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }
