@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { escapeHtml, isValidEmail, sendInboxEmail } from "@/lib/email";
+import { describeEmailError, escapeHtml, isValidEmail, sendInboxEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -41,11 +41,8 @@ export async function POST(request: Request) {
         <p style="white-space:pre-wrap">${escapeHtml(message)}</p>
       `,
     });
-  } catch {
-    return NextResponse.json(
-      { ok: false, error: "Could not send that message right now. Try again in a moment." },
-      { status: 502 },
-    );
+  } catch (error) {
+    return NextResponse.json({ ok: false, error: describeEmailError(error) }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true });

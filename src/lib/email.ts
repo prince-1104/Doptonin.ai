@@ -55,3 +55,17 @@ export async function sendInboxEmail({
     throw new Error(error.message);
   }
 }
+
+export function describeEmailError(error: unknown) {
+  const detail = error instanceof Error ? error.message : "Unknown email error.";
+
+  if (/api key|unauthorized|invalid.+key/i.test(detail)) {
+    return "The Resend API key in Vercel does not match this account. Create a new key on the doptonin@gmail.com Resend account, replace RESEND_API_KEY, then Redeploy.";
+  }
+
+  if (/testing emails|verify a domain|own email/i.test(detail)) {
+    return "Resend is still in test mode, so it can only deliver to the Resend account email. Confirm the account is doptonin@gmail.com, or verify doptonin.online as a sending domain.";
+  }
+
+  return detail;
+}
