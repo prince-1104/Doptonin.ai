@@ -1,5 +1,6 @@
 "use client";
 
+import { LinkedInLink } from "@/components/LinkedIn";
 import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { nav } from "@/lib/content";
@@ -12,7 +13,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6">
         <Logo className="min-w-0" />
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-5 lg:gap-8 md:flex" aria-label="Primary">
           {nav.map((item) => (
             <a
               key={item.href}
@@ -23,6 +24,8 @@ export function SiteHeader() {
             </a>
           ))}
         </nav>
+
+        <div className="ml-auto md:ml-0"><LinkedInLink compact /></div>
 
         <button
           type="button"

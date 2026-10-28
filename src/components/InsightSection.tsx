@@ -53,11 +53,11 @@ export function InsightSection() {
           </p>
         </FadeIn>
 
-        <div className="mt-10 grid gap-8 sm:mt-14 md:grid-cols-3 md:gap-12">
+        <div className="mt-10 grid gap-4 sm:mt-14 md:grid-cols-3 md:gap-5">
           {insight.steps.map((step, index) => {
             const Icon = icons[index];
             return (
-              <FadeIn key={step.title} delay={index * 0.08}>
+              <FadeIn key={step.title} delay={index * 0.08} className="premium-card p-6">
                 <Icon />
                 <h3 className="mt-5 text-lg font-medium tracking-tight">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>

@@ -110,3 +110,70 @@ body {
     stroke-dashoffset: 0;
   }
 }
+
+/* Shared surfaces keep the social invitation and feature cards in one visual system. */
+.premium-card {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid rgba(135, 188, 206, .18);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(24, 40, 55, .96), rgba(12, 18, 32, .97));
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .04);
+  transition: border-color .35s, box-shadow .35s, transform .35s;
+}
+.premium-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at top right, rgba(46, 230, 214, .12), transparent 65%);
+  pointer-events: none;
+}
+.premium-card:focus-within { border-color: rgba(46, 230, 214, .55); }
+@media (hover: hover) {
+  .premium-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(46, 230, 214, .5);
+    box-shadow: 0 20px 65px rgba(0, 0, 0, .25), 0 0 32px rgba(46, 230, 214, .10);
+  }
+}
+.community-card { padding: clamp(22px, 3vw, 32px); }
+.linkedin-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 10px 15px;
+  border: 1px solid rgba(97, 180, 255, .5);
+  border-radius: 12px;
+  background: linear-gradient(120deg, #124e88, #123456);
+  box-shadow: 0 0 22px rgba(43, 139, 235, .12);
+  color: #f5faff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: box-shadow .25s, border-color .25s, background .25s;
+}
+.linkedin-link:hover { border-color: #89cdff; background: #16558d; box-shadow: 0 0 28px #168aff38; }
+.community-card .linkedin-link { width: 100%; }
+a:focus-visible, button:focus-visible { outline: 2px solid #80f3e7; outline-offset: 5px; }
+.mascot-scene { position: relative; display: flex; flex-direction: column; align-items: center; padding: 14px 0 24px; }
+.linkedin-mascot { width: 190px; height: 171px; filter: drop-shadow(0 0 18px #2ee6d622); animation: mascot-float 5s ease-in-out infinite; }
+.mascot-orbit { position: absolute; top: 30px; width: 170px; height: 145px; border: 1px solid #2ee6d619; border-radius: 50%; box-shadow: 0 0 50px #2ee6d60c; }
+.mascot-note { color: #9db7c7; font-size: 11px; letter-spacing: .03em; }
+@keyframes mascot-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+#top { background: radial-gradient(ellipse at 10% 15%, #2ee6d609, transparent 55%); }
+#top h1 { text-shadow: 0 2px 30px #0b0e1a; }
+#top > .relative > div { min-width: 0; }
+#top .section-label { line-height: 1.8; }
+@media (max-width: 767px) {
+  header .linkedin-link { gap: 6px; padding: 8px 10px; font-size: 12px; }
+  .community-card { max-width: 520px; width: 100%; margin-inline: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .linkedin-mascot { animation: none; }
+  .premium-card, .linkedin-link { transition: none; }
+  .premium-card:hover { transform: none; }
+}

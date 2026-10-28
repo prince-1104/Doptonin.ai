@@ -289,7 +289,7 @@ export function MolecularBackground() {
           <ScrollScene compact={compact} />
         </Canvas>
       </WebGLGuard>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_22%,rgba(11,14,26,0.55)_0%,rgba(11,14,26,0.78)_52%,#0B0E1A_100%)] md:bg-[radial-gradient(ellipse_at_50%_28%,rgba(11,14,26,0.28)_0%,rgba(11,14,26,0.62)_58%,#0B0E1A_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_22%,rgba(11,14,26,0.55)_0%,rgba(11,14,26,0.78)_52%,#0B0E1A_100%)] md:bg-[radial-gradient(ellipse_at_50%_28%,rgba(11,14,26,0.65)_0%,rgba(11,14,26,0.80)_58%,#0B0E1A_100%)]" />
     </div>
   );
 }

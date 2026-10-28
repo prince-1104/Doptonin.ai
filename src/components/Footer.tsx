@@ -1,3 +1,4 @@
+import { LinkedInLink } from "@/components/LinkedIn";
 import { BrandPlate, Logo } from "@/components/Logo";
 import { brand, footer } from "@/lib/content";
 
@@ -16,6 +17,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-1 text-sm">
+          <LinkedInLink />
           {footer.socials.map((item) => (
             <a
               key={item.label}
